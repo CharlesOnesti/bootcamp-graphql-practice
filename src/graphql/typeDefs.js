@@ -2,13 +2,14 @@ const { gql } = require('apollo-server-express')
 
 module.exports = gql`
   type Query {
-    authors: [Author!]!
+    authors: [Author]!
+    author(authorId: ID!): Author!
     books: [Book!]!
+    book(bookId: ID!): Book!
     publishers: [Publisher!]!
-    search(input: String!): [SearchResult!]!
+    publisher(publisherId: ID!): Publisher!
   }
-  type mutation {
-    editAuthorName(newName: string!): Author!
+  type Mutation {
     createBook(input: CreateBookInput!): Book!
     deleteBook(bookId: ID!): Book!
     register(input: CreateAuthorInput!): Author!
@@ -20,29 +21,29 @@ module.exports = gql`
     lastName: String!
     email: String!
     age: Int!
-    numBooksAuthored: Int!
-    books: [Book!]!
+    numBooksPublished: Int
+    address: Address
  }
   type Book {
     id: ID!
-    authorId: ID!
-    pulisherId: ID!
+    language: String!
+    author: Author!
+    publisher: Publisher!
     bestseller: Boolean!
     datePublished: String!
     title: String!
     numPages: Int!
-    imgUrl: String
     createdAt: String!
     updatedAt: String!
   }
-  type publisher {
+  type Publisher {
     id: ID!
-    PublisherAddressId: ID!
+    address: Address!
     company: String!
     phoneNumber: String!
     numBooksPublished: Int!
   }
-  type address {
+  type Address {
     id: ID!
     street: String!
     city: String!
@@ -51,10 +52,11 @@ module.exports = gql`
   }
   input CreateBookInput {
     title: String!
-    imgUrl: String
     numPages: Int!
+    language: String!
     bestseller: Boolean!
     publisherId: ID!
+    authorId: ID!
   }
   input CreateAuthorInput {
     firstName: String!
@@ -68,5 +70,4 @@ module.exports = gql`
     state: String!
     zip: Int!
   }
-  union SearchResult = Book | Author | Publisher
 `
