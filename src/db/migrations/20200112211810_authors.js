@@ -6,6 +6,8 @@ exports.up = knex => knex.schema.createTable('authors', table => {
     .primary()
     .defaultTo(knex.raw('uuid_generate_v4()'))
 
+  table.string('password').notNullable()
+
   table.string('firstName').notNullable()
 
   table.string('lastName').notNullable()

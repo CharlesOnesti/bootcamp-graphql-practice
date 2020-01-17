@@ -3,6 +3,7 @@ const addressesData = require('./addresses')
 
 casual.define('author', addressId => ({
   id: casual.uuid,
+  password: '$2b$10$ZwCCTRkKzRDtm0.rEr19uODA/pylsSG4Ixd5wQv4D/CcAiOon1RBK',
   email: casual.email,
   firstName: casual.first_name,
   lastName: casual.last_name,

@@ -12,18 +12,24 @@ module.exports = gql`
   type Mutation {
     createBook(input: CreateBookInput!): Book!
     deleteBook(bookId: ID!): Book!
-    register(input: CreateAuthorInput!): Author!
+    register(email: String!, password: String!): UserAuth!
+    login(email: String!, password: String!): UserAuth!
     createAddress(input: CreateAddressInput!): Address!
   }
   type Author {
     id: ID!
-    firstName: String!
-    lastName: String!
+    password: String!
+    firstName: String
+    lastName: String
     email: String!
-    age: Int!
+    age: Int
     numBooksPublished: Int
     address: Address
  }
+  type UserAuth {
+    token: String!
+    user: Author!
+  }
   type Book {
     id: ID!
     language: String!
@@ -57,12 +63,6 @@ module.exports = gql`
     bestseller: Boolean
     publisherId: ID!
     authorId: ID!
-  }
-  input CreateAuthorInput {
-    firstName: String!
-    lastName: String!
-    age: Int!
-    email: String!
   }
   input CreateAddressInput {
     street: String!
